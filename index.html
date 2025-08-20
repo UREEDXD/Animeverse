@@ -1,16 +1,222 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>replit</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8">
+  <title>Anime World</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:"Poppins",sans-serif; }
+    body {
+      min-height:100vh; overflow-x:hidden;
+      background: linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#1a2a6c);
+      background-size:400% 400%; animation:gradientBG 15s ease infinite; color:#fff;
+    }
+    @keyframes gradientBG {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+    header {
+      text-align:center; padding:2rem; font-size:3rem; font-weight:bold; color:#ff4ecd;
+      text-shadow:0 0 10px #ff4ecd,0 0 20px #ff1e9d,0 0 40px #ff1e9d; animation:glow 3s ease-in-out infinite alternate;
+    }
+    @keyframes glow {from{text-shadow:0 0 10px #ff4ecd,0 0 20px #ff1e9d}to{text-shadow:0 0 20px #ff66cc,0 0 40px #ff1e9d}}
+
+    .top-bar { text-align:center; margin:1rem; }
+    .search-bar {
+      padding: .6rem 1rem;
+      width: 250px;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+    }
+    .credits-btn {
+      margin-left: 1rem;
+      padding: .6rem 1rem;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      background: #ff4ecd;
+      color: #fff;
+      transition: 0.3s;
+    }
+    .credits-btn:hover {background:#ff1e9d;}
+
+    /* OUTSIDE ANIME GRID */
+    .anime-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 220px));
+      justify-content: center;
+      gap: 20px;
+      padding: 2rem;
+    }
+
+    /* ANIME BOX */
+    .anime-box {
+      width: 220px;
+      height: 320px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(15px);
+      padding: 1rem;
+      border-radius: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .anime-box img { width: 100%; height:150px; object-fit:cover; border-radius:15px; margin-bottom:.8rem; }
+    .anime-box h2 { font-size:1.1rem; margin-bottom:.3rem; color:#ffde59; text-shadow:0 0 5px #ffde59,0 0 15px #ffaa00; }
+    .anime-box p { font-size:.8rem; color:#ddd; flex-grow:1; overflow:hidden; }
+
+    .anime-box:hover { transform: translateY(-10px) scale(1.05); box-shadow:0 15px 30px rgba(255,30,157,0.4); border-color:rgba(255,30,157,0.6); }
+
+    /* EPISODES PAGE */
+    .episodes-page { display:none; padding:2rem; text-align:center; }
+    .episodes-page img { max-width:300px; width:100%; border-radius:20px; margin-bottom:1rem; }
+    .episodes-page h2 { font-size:2rem; margin-bottom:1rem; color:#ffde59; text-shadow:0 0 5px #ffde59,0 0 15px #ffaa00; }
+
+    /* EPISODE GRID */
+    .episodes { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:20px; margin-top:2rem; }
+    .episode { background:rgba(255,255,255,0.15); backdrop-filter:blur(10px); padding:0.8rem; border-radius:15px; transition: transform 0.3s, box-shadow 0.3s, background 0.3s; display:flex; justify-content:center; align-items:center; animation: pulse 2s infinite alternate; }
+    .episode:hover { transform: translateY(-5px) scale(1.03); background: rgba(255,255,255,0.25); box-shadow:0 8px 20px rgba(255,222,89,0.4); }
+    .episode a { font-size:.9rem; padding:.4rem .8rem; border-radius:10px; background:rgba(255,30,157,0.7); color:#fff; text-decoration:none; font-weight:bold; transition: transform .3s, background .3s, box-shadow .3s; }
+    .episode a:hover { transform: scale(1.1) translateY(-2px); background:#ff1e9d; box-shadow:0 5px 15px rgba(255,30,157,0.5); }
+
+    /* BACK & NEXT BUTTONS */
+    .back-btn, .next-btn { margin:2rem .5rem; display:inline-block; padding:.8rem 1.5rem; background:rgba(255,255,255,0.15); border-radius:30px; text-decoration:none; color:#fff; font-weight:bold; transition: transform .3s, box-shadow .3s, background .3s; }
+    .back-btn:hover, .next-btn:hover { transform:translateY(-3px) scale(1.05); box-shadow:0 5px 15px rgba(255,222,89,0.3); background:rgba(255,255,255,0.35); }
+    .btn-container { text-align:center; }
+    .page-number { margin-top:1rem; text-align:center; font-weight:bold; color:#ffde59; }
+
+    @keyframes pulse { 0%{transform:scale(1);}50%{transform:scale(1.02);}100%{transform:scale(1);} }
+
+    /* Credits Box */
+    .credits { width:320px; margin:50px auto; padding:20px; background:linear-gradient(135deg,rgba(20,20,40,0.9),rgba(40,40,70,0.9)); border:2px solid #ff69b4; border-radius:20px; color:white; text-align:center; box-shadow:0 0 20px rgba(255,105,180,0.6); animation:fadeSlideUp 1.5s ease forwards; opacity:0; transform:translateY(50px); transition:all .4s ease-in-out; }
+    .credits:hover { transform:scale(1.05); box-shadow:0 0 30px rgba(255,105,180,0.9); border-color:#ff85d0; }
+    .credits h2 { margin-bottom:10px; font-size:1.8em; text-shadow:0 0 10px #ff69b4; }
+    .credits p { margin:5px 0; font-size:1.1em; }
+    .credits span { color:#ff69b4; font-weight:bold; text-shadow:0 0 5px #ff69b4; }
+    @keyframes fadeSlideUp { 0%{opacity:0; transform:translateY(50px) scale(0.95);}100%{opacity:1; transform:translateY(0) scale(1);} }
+  </style>
 </head>
-
 <body>
-  Hello world
-  <script src="script.js"></script>
-</body>
 
+  <!-- WEBSITE NAME -->
+  <header>🌸 Anime World 🌸</header>
+
+  <!-- SEARCH + CREDITS -->
+  <div class="top-bar">
+    <input type="text" id="searchInput" class="search-bar" placeholder="Search Anime...">
+    <button class="credits-btn" onclick="showCredits()">Credits</button>
+  </div>
+
+  <!-- ANIME LIST -->
+  <div class="anime-container" id="animeList"></div>
+  <div class="btn-container">
+    <a href="#" class="back-btn" id="prevBtn">⬅ Back Page</a>
+    <a href="#" class="next-btn" id="nextBtn">➡ Next Page</a>
+  </div>
+  <div class="page-number" id="pageNum">Page 1</div>
+
+  <!-- EPISODES PAGE -->
+  <div class="episodes-page" id="episodesPage">
+    <img id="animeImg" src="">
+    <h2 id="animeTitle"></h2>
+    <p id="animeDesc"></p>
+    <div class="episodes" id="episodesList"></div>
+    <a href="#" class="back-btn" onclick="goBack()">⬅ Back</a>
+  </div>
+
+  <script>
+      const animeData = {
+        "Attack on Titan": {
+          img:"https://i.imgur.com/QvJf65m.jpeg",
+          desc:"Humanity fights against giant man-eating Titans.",
+          episodes:[
+            {name:"Episode 1",link:"#"},                 
+          ]
+        },
+        "JUJUTSU Kaisen S2": {
+          img:"https://i.imgur.com/IyisGpq.jpeg",
+          desc:"The past and present collide in a storm of curses. Season 2 dives into the dark history of Satoru Gojo and Suguru Geto during their time as Jujutsu High students. The Shibuya Incident Arc then takes center stage, throwing Tokyo into chaos as curses and sorcerers clash in one of the most intense battles in modern anime. Stunning animation, jaw-dropping fights, and heartbreaking twists make this season an unforgettable ride.",
+          episodes:[
+            {name:"Episode 1",link:"https://archive.org/details/jujutsu-kaisen-s-02-e-01-720p"},
+            {name:"Episode 2",link:"https://archive.org/details/jujutsu-kaisen-s-02-e-02-720p"},
+            {name:"Episode 3",link:"#"}
+          ]
+        },
+        "Alya Sometimes Hides Her Feeling in Russian": {
+          img:"https://i.imgur.com/3ipGXVm.jpeg",
+          desc:"Love blooms in the language of secrets. Alya, the beautiful half-Russian girl, hides her true feelings behind sharp words—only to reveal her soft side in whispered Russian that she thinks no one understands. But what if her seatmate actually knows the language? A romantic comedy full of charm, heart-throbbing moments, and cultural flavor that makes every scene warm and special.",
+          episodes:[
+            {name:"Episode 1",link:"https://drive.google.com/uc?export=download&id=1P_KCrUQ0TY13oXRPMs0rduCC-sOw0qHp"},
+{name:"Episode2",link:"https://drive.google.com/file/d/1TMeni83zSfkRIQoe3Xq7V8GlCaAgdiSc/view?usp=sharing"}
+          ]
+        }
+      };
+
+
+    let currentPage = 1;
+    const perPage = 10;
+    let filteredNames = Object.keys(animeData);
+
+    function renderAnime() {
+      const animeList = document.getElementById("animeList");
+      animeList.innerHTML = "";
+      const start = (currentPage-1)*perPage, end = start+perPage;
+      filteredNames.slice(start,end).forEach(name=>{
+        let div=document.createElement("div");
+        div.classList.add("anime-box");
+        div.setAttribute("onclick",`openAnime('${name}')`);
+        div.innerHTML=`<img src="${animeData[name].img}"><h2>${name}</h2><p>${animeData[name].desc}</p>`;
+        animeList.appendChild(div);
+      });
+      document.getElementById("prevBtn").style.display = currentPage > 1 ? "inline-block" : "none";
+      document.getElementById("nextBtn").style.display = end < filteredNames.length ? "inline-block" : "none";
+      document.getElementById("pageNum").textContent = "Page " + currentPage;
+    }
+    renderAnime();
+
+    function openAnime(name){
+      document.getElementById("animeList").style.display="none";
+      document.querySelector(".btn-container").style.display="none";
+      document.getElementById("pageNum").style.display="none";
+      const epPage=document.getElementById("episodesPage");
+      epPage.style.display="block";
+      document.getElementById("animeImg").src=animeData[name].img;
+      document.getElementById("animeTitle").textContent=name;
+      document.getElementById("animeDesc").textContent=animeData[name].desc;
+      const epList=document.getElementById("episodesList");
+      epList.innerHTML="";
+      animeData[name].episodes.forEach(ep=>{
+        let div=document.createElement("div");
+        div.classList.add("episode");
+        div.innerHTML=`<a href="${ep.link}" download>${ep.name}</a>`;
+        epList.appendChild(div);
+      });
+    }
+    function goBack(){
+      document.getElementById("animeList").style.display="grid";
+      document.getElementById("episodesPage").style.display="none";
+      document.querySelector(".btn-container").style.display="block";
+      document.getElementById("pageNum").style.display="block";
+      renderAnime();
+    }
+    document.getElementById("nextBtn").onclick=()=>{currentPage++;renderAnime();};
+    document.getElementById("prevBtn").onclick=()=>{currentPage--;renderAnime();};
+
+    // Search
+    document.getElementById("searchInput").addEventListener("input", function() {
+      const query = this.value.toLowerCase();
+      filteredNames = Object.keys(animeData).filter(n => n.toLowerCase().includes(query));
+      currentPage = 1;
+      renderAnime();
+    });
+
+    // Credits
+    function showCredits() {
+      alert("Website developed by: ⭐UREEDXD⭐");
+    }
+  </script>
+</body>
 </html>
