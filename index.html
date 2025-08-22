@@ -20,6 +20,27 @@
       user-select: none;
       touch-action: manipulation;
     }
+    
+    .social-buttons {
+      position: fixed;
+      right: 10px;
+      bottom: 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      opacity: 1;
+      z-index: 999;
+    }
+    .social-buttons img {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .social-buttons img:hover {
+      transform: scale(1.1);
+    }
+
 
     /* 🔥 Video background */
     .video-bg {
@@ -204,10 +225,24 @@
       .anime-box img { height:140px; }
       .anime-description { font-size:.85rem; padding:.8rem; }
       .episodes-page h2 { font-size:1.3rem; }
+      .social-buttons { right:5px; bottom:80px; gap:8px; }
+      .social-buttons img { width:35px; height:35px; }
     }
   </style>
 </head>
 <body>
+
+  <div class="social-buttons show" id="socialButtons">
+    <a href="https://discord.gg/tpBhP3KAu9" target="_blank">
+      <img src="https://img.icons8.com/fluency/48/000000/discord-logo.png" alt="Discord">
+    </a>
+    <a href="https://www.youtube.com/channel/UChm88q0ZcNMWr2KK-oYCGUQ" target="_blank">
+      <img src="https://img.icons8.com/fluency/48/000000/youtube-play.png" alt="YouTube">
+    </a>
+    <a href="https://www.instagram.com/ureed_xd/" target="_blank">
+      <img src="https://img.icons8.com/fluency/48/000000/instagram-new.png" alt="Instagram">
+    </a>
+  </div>
 
 <!-- 🔥 Video Background -->
 <video autoplay muted loop playsinline class="video-bg">
@@ -237,17 +272,21 @@
 
 <script>
   const animeData = {
-    "Attack on Titan 4ep added": {
+    "Attack on Titan All ep added of S1 HIN-JAP-ENG": {
       img:"https://i.imgur.com/QvJf65m.jpeg",
       desc:"Humanity fights against giant man-eating Titans.",
       episodes:[
         {name:"Episode 1",link:"https://hubcloud.one/drive/hxskh9b4preq1ps"},
         {name:"Episode 2",link:"https://hubcloud.one/drive/kp02tftdp2yp1yi"},
         {name:"Episode 3",link:"https://hubcloud.one/drive/uzhvuesfk2vndzh"},
-        {name:"Episode 4",link:"https://hubcloud.one/drive/8npfbgxgxcwazcs"}
+        {name:"Episode 4",link:"https://hubcloud.one/drive/8npfbgxgxcwazcs"},
+        {name:"Episode 5",link:"https://hubcloud.one/drive/itktjt2tkixpb21"},
+        {name:"Episode 6",link:"https://new3.gdflix.net/file/wOROIqEsQgn92Y3"},
+        {name:"Episode 7",link:"https://new3.gdflix.net/file/Sh0XeU8FCDVnNY3"},
+        {name:"Episode 8",link:"https://new3.gdflix.net/file/KXmNpGUPq5u7eWs"}
       ]
   },
-    "JUJUTSU Kaisen S2 6ep added": {
+    "JUJUTSU Kaisen S2 HIN-JAP-ENG 7,8,9ep added": {
       img:"https://i.imgur.com/IyisGpq.jpeg",
       desc:"The past and present collide in a storm of curses. Season 2 dives into the dark history of Satoru Gojo and Suguru Geto during their time as Jujutsu High students. The Shibuya Incident Arc then takes center stage, throwing Tokyo into chaos as curses and sorcerers clash in one of the most intense battles in modern anime. Stunning animation, jaw-dropping fights, and heartbreaking twists make this season an unforgettable ride.",
       episodes:[
@@ -256,10 +295,13 @@
         {name:"Episode 3",link:"https://hubcloud.one/video/yvhcijxg7hn4hcb"},
         {name:"Episode 4",link:"https://hubcloud.one/video/f5lgxohyyfl3g3a"},
         {name:"Episode 5",link:"https://hubcloud.one/drive/ve_ecl0nvoiingi"},
-        {name:"Episode 6",link:"https://hubcloud.one/video/ere9eoo3e83cm33"}
+        {name:"Episode 6",link:"https://hubcloud.one/video/ere9eoo3e83cm33"},
+        {name:"Episode 7",link:"https://new3.gdflix.net/file/akyC0khhV3"},
+        {name:"Episode 8",link:"https://new3.gdflix.net/file/wMUEI3iLbQ"},
+        {name:"Episode 9",link:"https://new3.gdflix.net/file/6zO44hxAsJ"}
       ]
     },
-    "Alya Sometimes Hides Her Feeling in Russian ep 4,5 added": {
+    "Alya Sometimes Hides Her Feeling in Russian HIN-JAP-ENG ep 7,8,9Added": {
       img:"https://i.imgur.com/3ipGXVm.jpeg",
       desc:"Love blooms in the language of secrets. Alya, the beautiful half-Russian girl, hides her true feelings behind sharp words—only to reveal her soft side in whispered Russian that she thinks no one understands. But what if her seatmate actually knows the language? A romantic comedy full of charm, heart-throbbing moments, and cultural flavor that makes every scene warm and special.",
       episodes:[
@@ -268,28 +310,39 @@
         {name:"Episode 3",link:"https://drive.google.com/file/d/1tDpB2VxCu4xUu431jxyacSveBQKbBT1X/view?usp=sharing"},
         {name:"Episode 4",link:"https://hubcloud.one/drive/1j7ctoxajxpfwxr"},
         {name:"Episode 5",link:"https://hubcloud.one/drive/btkggo97fbb0oir"},
-        {name:"Episode 6",link:"https://hubcloud.one/drive/ajush8jhy3ua4vj"}
+        {name:"Episode 6",link:"https://hubcloud.one/drive/ajush8jhy3ua4vj"},
+        {name:"Episode 7",link:"https://hubcloud.one/drive/op7k4vrkvn7ovgv"},
+        {name:"Episode 8",link:"https://hubcloud.one/drive/6qtfivttln4y967"},
+        {name:"Episode 9",link:"https://hubcloud.one/drive/1an1k7qlgq11lgv"}
       ]
     },
 
 
-    "Horimiya(Season1) 3ep added": {
+    "Horimiya(Season1) HIN-JAP-ENG 4,5,6ep added": {
         img:"https://i.imgur.com/qjJnQ33.jpeg",
         desc:"The story is about a beautiful girl named Hori who was at the top of her school, fell in love with a gloomy loner named Miyamura. The two started off as strangers at first but eventually met eachother, the two then started having romantic feelings for eachother and got engaged.",
         episodes:[
             {name:"Episode 1",link:"https://hubcloud.one/drive/prt20hsphzohis9"},
             {name:"Episode 2",link:"https://hubcloud.one/drive/uwluudtnvq43nqu"},
-            {name:"Episode 3",link:"https://hubcloud.one/drive/yrlpslqttrfvew9"}
+            {name:"Episode 3",link:"https://hubcloud.one/drive/yrlpslqttrfvew9"},
+            {name:"Episode 4",link:"https://new3.gdflix.net/file/T5pZpxnPSy"},
+            {name:"Episode 5",link:"https://new3.gdflix.net/file/LCahQWPL4J"},
+            {name:"Episode 6",link:"https://new3.gdflix.net/file/9TaXoMCajl"}
         ]
     },
 
-      "My Dress-Up Darling (Season 1)3ep added": {
+      "My Dress-Up Darling (Season 1) HIN-JAP-ENG 4,5,6ep added": {
           img:"https://i.imgur.com/olPphyM.jpeg",
           desc:"My Dress-Up Darling Season 1 follows Wakana Gojou, a shy high school boy passionate about traditional Hina doll craftsmanship, and Marin Kitagawa, a popular and outgoing classmate with a secret love for cosplay.When Marin discovers Wakana's exquisite sewing skills, she enlists his help to create elaborate cosplay costumes for her, leading to an unexpected collaboration that forms a heartwarming, cross-cultural romance as they bond over their shared, albeit different, passions.",
           episodes:[
               {name:"Episode 1",link:"https://hubcloud.one/drive/uuvfluufs7rvjmf"},
               {name:"Episode 2",link:"https://hubcloud.one/drive/lvdk4bdthmolm55"},
-              {name:"Episode 3",link:"https://hubcloud.one/drive/6n069ddrd1nr4rb"}
+              {name:"Episode 3",link:"https://hubcloud.one/drive/6n069ddrd1nr4rb"},
+              {name:"Episode 4",link:"https://katdrive.link/file/1660029115"},
+              {name:"Episode 5",link:"https://katdrive.link/file/1660641778"},
+              {name:"Episode 6",link:"https://katdrive.link/file/1661249034"}  
+              
+            
           ]
       }
     };
@@ -353,6 +406,6 @@
     currentPage = 1;
     renderAnime();
   });
-</script>
-</body>
+    </script>
+  </body>
 </html>
