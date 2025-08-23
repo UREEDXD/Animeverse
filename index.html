@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Anime World</title>
+  <title>AnimeVerse</title>
   <!-- 📱 Prevent zoom/pinch on mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -20,7 +20,101 @@
       user-select: none;
       touch-action: manipulation;
     }
-    
+    /* Fullscreen Loading Screen */
+    #loading-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    /* Center content */
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    /* Logo Styling */
+    .loading-logo {
+      width: 180px;
+      height: auto;
+      border-radius: 20px; /* smooth corners */
+      object-fit: contain;
+      animation: pulse 1.5s infinite alternate;
+    }
+
+    /* AnimeVerse text */
+    .loading-text {
+      font-size: 2rem;
+      color: #ff0000;
+      text-shadow: 0 0 10px #ff0000, 0 0 20px #aa0000, 0 0 40px #550000;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    .loading-subtext {
+      color: #ccc;
+      font-size: 1rem;
+      margin-top: 5px;
+      font-style: italic;
+    }
+
+    /* Loading Bar */
+    .loading-bar {
+      width: 250px;
+      height: 12px;
+      border-radius: 10px;
+      background: rgba(255, 0, 0, 0.2);
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .loading-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #ff0000, #ff6666);
+      animation: loadFill 3s linear forwards;
+    }
+
+    /* Glow effect for logo */
+    @keyframes pulse {
+      from { filter: drop-shadow(0 0 5px red); }
+      to   { filter: drop-shadow(0 0 25px red); }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff0000, 0 0 20px #aa0000; }
+      to   { text-shadow: 0 0 25px #ff4444, 0 0 50px #ff0000; }
+    }
+
+    /* Progress fill animation */
+    @keyframes loadFill {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+
+
+    /* Logo Styling */
+    .loading-logo {
+      width: 500px;
+      mix-blend-mode: screen;
+      animation: pulse 1.5s infinite alternate;
+    }
+
+    /* Glow effect for logo */
+    @keyframes pulse {
+      from { filter: drop-shadow(0 0 5px red); }
+      to   { filter: drop-shadow(0 0 25px red); }
+    }
+
     .social-buttons {
       position: fixed;
       right: 10px;
@@ -41,7 +135,6 @@
       transform: scale(1.1);
     }
 
-
     /* 🔥 Video background */
     .video-bg {
       position: fixed;
@@ -49,7 +142,7 @@
       width: 100%; height: 100%;
       object-fit: cover;
       z-index: -1;
-      pointer-events: none; /* prevents accidental interaction */
+      pointer-events: none;
     }
 
     header {
@@ -80,15 +173,15 @@
     /* 📱 Responsive Anime Grid */
     .anime-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 250px)); /* max 250px each */
+      grid-template-columns: repeat(auto-fit, minmax(160px, 250px));
       gap: 15px;
       padding: 1rem;
-      justify-content: center; /* center boxes instead of stretching */
+      justify-content: center;
     }
 
     .anime-box {
-      max-width: 250px; /* prevent huge stretching */
-      margin: 0 auto;   /* keep centered inside grid */
+      max-width: 250px;
+      margin: 0 auto;
     }
     .anime-box {
       background: rgba(255,0,0,0.1);
@@ -127,46 +220,68 @@
     .episodes-page { display:none; padding:1rem; text-align:center; }
     .episodes-page img { max-width:250px; width:100%; border-radius:15px; margin-bottom:1rem; }
     .episodes-page h2 {
-      font-size:1.5rem; margin-bottom:1rem;
+      font-size:1.5rem;
+      margin-bottom:1rem;
       color:#ff6666;
       text-shadow:0 0 5px #ff4444,0 0 15px #aa0000;
     }
-
     .anime-description {
-      max-width: 95%;
-      margin: 0 auto 1.5rem auto;
-      background: rgba(255,0,0,0.1);
-      border: 1px solid rgba(255,0,0,0.3);
-      border-radius: 15px;
-      padding: 1rem;
-      line-height: 1.6;
-      font-size: .9rem;
+      font-size: 1.1rem;              /* Bigger font */
+      line-height: 1.6;               /* More breathing space */
       color: #f0f0f0;
-      text-align: justify;
-      text-shadow: 0 0 5px rgba(255,0,0,0.4);
-      box-shadow: 0 5px 15px rgba(255,0,0,0.2);
+      max-width: 800px;               /* Keep it centered and not too wide */
+      margin: 0 auto 1.5rem auto;     /* Center + add spacing below */
+      padding: 1rem 1.2rem;
+      background: rgba(255, 0, 0, 0.1); 
+      border-left: 4px solid #ff3333; /* Stylish accent bar */
+      border-radius: 10px;
+      text-shadow: 0 0 8px rgba(255, 50, 50, 0.5);
       backdrop-filter: blur(6px);
-      animation: fadeIn 1s ease;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    @media (max-width: 600px) {
+      .anime-description {
+        font-size: 1rem;
+        padding: 0.8rem 1rem;
+      }
     }
 
+
+    /* ✅ Exactly 4 episode buttons per row on desktop */
     .episodes {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-      gap:15px;
-      margin-top:1rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+      margin-top: 1rem;
     }
+
+    @media (max-width: 800px) {
+      .episodes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 500px) {
+      .episodes {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
     .episode {
-      background:rgba(255,0,0,0.15);
-      backdrop-filter:blur(10px);
-      padding:.8rem;
-      border-radius:15px;
-      display:flex; justify-content:center; align-items:center;
+      background: rgba(255,0,0,0.15);
+      backdrop-filter: blur(10px);
+      padding: .8rem;
+      border-radius: 15px;
+      display: flex; 
+      justify-content: center; 
+      align-items: center;
       transition: transform .3s, box-shadow .3s, background .3s;
+
+      /* 🔥 New part */
+      width: 50%;          /* Makes it take full width of parent */
+      max-width: 500px;     /* Optional: limit so it doesn’t get too wide */
+      margin: 0 auto;       /* Centers it */
+      box-sizing: border-box;
     }
+
     .episode a {
       font-size:.85rem;
       padding:.4rem .8rem;
@@ -231,7 +346,19 @@
   </style>
 </head>
 <body>
+  <!-- 🔥 Loading Screen -->
+  <div id="loading-screen">
+    <div class="loading-content">
+      <img src="https://i.imgur.com/QYAUWVy.png" alt="AnimeVerse Logo" class="loading-logo">
+      <h1 class="loading-text">AnimeVerse</h1>
+      <div class="loading-bar">
+        <div class="loading-fill"></div>
+      </div>
+      <p class="loading-subtext" id="loadingTip">Loading...</p>
+    </div>
+  </div>
 
+  
   <div class="social-buttons show" id="socialButtons">
     <a href="https://discord.gg/tpBhP3KAu9" target="_blank">
       <img src="https://img.icons8.com/fluency/48/000000/discord-logo.png" alt="Discord">
@@ -244,168 +371,260 @@
     </a>
   </div>
 
-<!-- 🔥 Video Background -->
-<video autoplay muted loop playsinline class="video-bg">
-  <source src="https://media.giphy.com/media/l3c4VbE2i6fvtJvEnU/giphy.mp4" type="video/mp4">
-</video>
+  <!-- 🔥 Video Background -->
+  <video autoplay muted loop playsinline class="video-bg">
+    <source src="https://media.giphy.com/media/l3c4VbE2i6fvtJvEnU/giphy.mp4" type="video/mp4">
+  </video>
 
-<header>AnimeVerse</header>
-<div class="top-bar">
-  <input type="text" id="searchInput" class="search-bar" placeholder="Search Anime...">
-</div>
-<div class="anime-container" id="animeList"></div>
-<div class="btn-container">
-  <a href="#" class="back-btn" id="prevBtn">⬅ Back Page</a>
-  <a href="#" class="next-btn" id="nextBtn">➡ Next Page</a>
-</div>
-<div class="page-number" id="pageNum">Page 1</div>
+  <header>AnimeVerse</header>
+  <div class="top-bar">
+    <input type="text" id="searchInput" class="search-bar" placeholder="Search Anime...">
+  </div>
+  <div class="anime-container" id="animeList"></div>
+  <div class="btn-container">
+    <a href="#" class="back-btn" id="prevBtn">⬅ Back Page</a>
+    <a href="#" class="next-btn" id="nextBtn">➡ Next Page</a>
+  </div>
+  <div class="page-number" id="pageNum">Page 1</div>
 
-<div class="episodes-page" id="episodesPage">
-  <img id="animeImg" src="">
-  <h2 id="animeTitle"></h2>
-  <div id="animeDesc" class="anime-description"></div>
-  <div class="episodes" id="episodesList"></div>
-  <a href="#" class="back-btn" onclick="goBack()">⬅ Back</a>
-</div>
+  <div class="episodes-page" id="episodesPage">
+    <img id="animeImg" src="">
+    <h2 id="animeTitle"></h2>
+    <div id="animeDesc" class="anime-description"></div>
+    <div class="episodes" id="episodesList"></div>
+    <a href="#" class="back-btn" onclick="goBack()">⬅ Back</a>
+  </div>
 
-<div class="credits-footer">Website developed by ⭐UREEDXD⭐</div>
+  <div class="credits-footer">Website developed by ⭐UREEDXD⭐</div>
 
-<script>
-  const animeData = {
-    "Attack on Titan All ep added of S1 HIN-JAP-ENG": {
-      img:"https://i.imgur.com/QvJf65m.jpeg",
-      desc:"Humanity fights against giant man-eating Titans.",
-      episodes:[
-        {name:"Episode 1",link:"https://hubcloud.one/drive/hxskh9b4preq1ps"},
-        {name:"Episode 2",link:"https://hubcloud.one/drive/kp02tftdp2yp1yi"},
-        {name:"Episode 3",link:"https://hubcloud.one/drive/uzhvuesfk2vndzh"},
-        {name:"Episode 4",link:"https://hubcloud.one/drive/8npfbgxgxcwazcs"},
-        {name:"Episode 5",link:"https://hubcloud.one/drive/itktjt2tkixpb21"},
-        {name:"Episode 6",link:"https://new3.gdflix.net/file/wOROIqEsQgn92Y3"},
-        {name:"Episode 7",link:"https://new3.gdflix.net/file/Sh0XeU8FCDVnNY3"},
-        {name:"Episode 8",link:"https://new3.gdflix.net/file/KXmNpGUPq5u7eWs"}
-      ]
-  },
-    "JUJUTSU Kaisen S2 HIN-JAP-ENG 7,8,9ep added": {
-      img:"https://i.imgur.com/IyisGpq.jpeg",
-      desc:"The past and present collide in a storm of curses. Season 2 dives into the dark history of Satoru Gojo and Suguru Geto during their time as Jujutsu High students. The Shibuya Incident Arc then takes center stage, throwing Tokyo into chaos as curses and sorcerers clash in one of the most intense battles in modern anime. Stunning animation, jaw-dropping fights, and heartbreaking twists make this season an unforgettable ride.",
-      episodes:[
-        {name:"Episode 1",link:"https://archive.org/details/jujutsu-kaisen-s-02-e-01-720p"},
-        {name:"Episode 2",link:"https://archive.org/details/jujutsu-kaisen-s-02-e-02-720p"},
-        {name:"Episode 3",link:"https://hubcloud.one/video/yvhcijxg7hn4hcb"},
-        {name:"Episode 4",link:"https://hubcloud.one/video/f5lgxohyyfl3g3a"},
-        {name:"Episode 5",link:"https://hubcloud.one/drive/ve_ecl0nvoiingi"},
-        {name:"Episode 6",link:"https://hubcloud.one/video/ere9eoo3e83cm33"},
-        {name:"Episode 7",link:"https://new3.gdflix.net/file/akyC0khhV3"},
-        {name:"Episode 8",link:"https://new3.gdflix.net/file/wMUEI3iLbQ"},
-        {name:"Episode 9",link:"https://new3.gdflix.net/file/6zO44hxAsJ"}
-      ]
-    },
-    "Alya Sometimes Hides Her Feeling in Russian HIN-JAP-ENG ep 7,8,9Added": {
-      img:"https://i.imgur.com/3ipGXVm.jpeg",
-      desc:"Love blooms in the language of secrets. Alya, the beautiful half-Russian girl, hides her true feelings behind sharp words—only to reveal her soft side in whispered Russian that she thinks no one understands. But what if her seatmate actually knows the language? A romantic comedy full of charm, heart-throbbing moments, and cultural flavor that makes every scene warm and special.",
-      episodes:[
-        {name:"Episode 1",link:"https://drive.google.com/uc?export=download&id=1P_KCrUQ0TY13oXRPMs0rduCC-sOw0qHp"},
-        {name:"Episode 2",link:"https://drive.google.com/file/d/1TMeni83zSfkRIQoe3Xq7V8GlCaAgdiSc/view?usp=sharing"},
-        {name:"Episode 3",link:"https://drive.google.com/file/d/1tDpB2VxCu4xUu431jxyacSveBQKbBT1X/view?usp=sharing"},
-        {name:"Episode 4",link:"https://hubcloud.one/drive/1j7ctoxajxpfwxr"},
-        {name:"Episode 5",link:"https://hubcloud.one/drive/btkggo97fbb0oir"},
-        {name:"Episode 6",link:"https://hubcloud.one/drive/ajush8jhy3ua4vj"},
-        {name:"Episode 7",link:"https://hubcloud.one/drive/op7k4vrkvn7ovgv"},
-        {name:"Episode 8",link:"https://hubcloud.one/drive/6qtfivttln4y967"},
-        {name:"Episode 9",link:"https://hubcloud.one/drive/1an1k7qlgq11lgv"}
-      ]
-    },
+  <script>
+    // 🎌 Random Anime Tips
+    const animeTips = [
+      "Tip: Never skip anime openings, they often foreshadow the story!",
+      "Tip: Sub or Dub? Try both and pick what feels best for you.",
+      "Tip: Always check if there’s a post-credit scene in anime movies.",
+      "Tip: Reading manga can give you more details after finishing the anime.",
+      "Tip: Watch seasonal charts to discover upcoming hidden gems.",
+      "Tip: Try watching with friends, it makes emotional moments even stronger.",
+      "Tip: Don’t binge too hard – enjoy the journey of each anime!",
+      "Tip: OSTs are half the experience – listen carefully to the background music.",
+      "Tip: Take breaks between episodes to absorb the story better.",
+      "Tip: Try different genres – comedy, slice of life, mecha, isekai – you might discover a new favorite!"
+    ];
 
-
-    "Horimiya(Season1) HIN-JAP-ENG 4,5,6ep added": {
+    // 🎲 Pick a random tip each load
+    document.addEventListener("DOMContentLoaded", () => {
+      const tipElement = document.getElementById("loadingTip");
+      const randomTip = animeTips[Math.floor(Math.random() * animeTips.length)];
+      tipElement.textContent = randomTip;
+    });
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("loading-screen");
+      setTimeout(() => {
+        loader.style.opacity = "0";
+        setTimeout(() => loader.style.display = "none", 500);
+      }, 3000); // wait 3s for loading bar to finish
+    });
+    const animeData = {
+      "Attack on Titan All ep added of S1 HIN-JAP-ENG": {
+        img:"https://i.imgur.com/QvJf65m.jpeg",
+        desc:"Humanity fights against giant man-eating Titans.",
+        episodes:[
+          {name:"Episode 1",link:"https://hubcloud.one/drive/hxskh9b4preq1ps"},
+          {name:"Episode 2",link:"https://hubcloud.one/drive/kp02tftdp2yp1yi"},
+          {name:"Episode 3",link:"https://hubcloud.one/drive/uzhvuesfk2vndzh"},
+          {name:"Episode 4",link:"https://hubcloud.one/drive/8npfbgxgxcwazcs"},
+          {name:"Episode 5",link:"https://hubcloud.one/drive/itktjt2tkixpb21"},
+          {name:"Episode 6",link:"https://new3.gdflix.net/file/wOROIqEsQgn92Y3"},
+          {name:"Episode 7",link:"https://new3.gdflix.net/file/Sh0XeU8FCDVnNY3"},
+          {name:"Episode 8",link:"https://new3.gdflix.net/file/KXmNpGUPq5u7eWs"},
+        ]
+      },
+      "JUJUTSU Kaisen S2 HIN-JAP-ENG 10,11,12ep added": {
+        img:"https://i.imgur.com/IyisGpq.jpeg",
+        desc:"The past and present collide in a storm of curses. Season 2 dives into the dark history of Satoru Gojo and Suguru Geto during their time as Jujutsu High students. The Shibuya Incident Arc then takes center stage, throwing Tokyo into chaos as curses and sorcerers clash in one of the most intense battles in modern anime. Stunning animation, jaw-dropping fights, and heartbreaking twists make this season an unforgettable ride.",
+        episodes:[
+          {name:"Episode 1",link:"https://archive.org/details/jujutsu-kaisen-s-02-e-01-720p"},
+          {name:"Episode 2",link:"https://archive.org/details/jujutsu-kaisen-s-02-e-02-720p"},
+          {name:"Episode 3",link:"https://hubcloud.one/video/yvhcijxg7hn4hcb"},
+          {name:"Episode 4",link:"https://hubcloud.one/video/f5lgxohyyfl3g3a"},
+          {name:"Episode 5",link:"https://hubcloud.one/drive/ve_ecl0nvoiingi"},
+          {name:"Episode 6",link:"https://hubcloud.one/video/ere9eoo3e83cm33"},
+          {name:"Episode 7",link:"https://new3.gdflix.net/file/akyC0khhV3"},
+          {name:"Episode 8",link:"https://new3.gdflix.net/file/wMUEI3iLbQ"},
+          {name:"Episode 9",link:"https://new3.gdflix.net/file/6zO44hxAsJ"},
+          {name:"Episode 10",link:"https://new3.gdflix.net/file/c71c3YBem6"},
+          {name:"Episode 11",link:"https://new3.gdflix.net/file/aW67ozlqty"},
+          {name:"Episode 12",link:"https://new3.gdflix.net/file/ODbURHb8V8"},
+        ]
+      },
+      "Alya Sometimes Hides Her Feeling in Russian HIN-JAP-ENG S1 All EpAdded": {
+        img:"https://i.imgur.com/3ipGXVm.jpeg",
+        desc:"Love blooms in the language of secrets. Alya, the beautiful half-Russian girl, hides her true feelings behind sharp words—only to reveal her soft side in whispered Russian that she thinks no one understands. But what if her seatmate actually knows the language? A romantic comedy full of charm, heart-throbbing moments, and cultural flavor that makes every scene warm and special.",
+        episodes:[
+          {name:"Episode 1",link:"https://drive.google.com/uc?export=download&id=1P_KCrUQ0TY13oXRPMs0rduCC-sOw0qHp"},
+          {name:"Episode 2",link:"https://drive.google.com/file/d/1TMeni83zSfkRIQoe3Xq7V8GlCaAgdiSc/view?usp=sharing"},
+          {name:"Episode 3",link:"https://drive.google.com/file/d/1tDpB2VxCu4xUu431jxyacSveBQKbBT1X/view?usp=sharing"},
+          {name:"Episode 4",link:"https://hubcloud.one/drive/1j7ctoxajxpfwxr"},
+          {name:"Episode 5",link:"https://hubcloud.one/drive/btkggo97fbb0oir"},
+          {name:"Episode 6",link:"https://hubcloud.one/drive/ajush8jhy3ua4vj"},
+          {name:"Episode 7",link:"https://hubcloud.one/drive/op7k4vrkvn7ovgv"},
+          {name:"Episode 8",link:"https://hubcloud.one/drive/6qtfivttln4y967"},
+          {name:"Episode 9",link:"https://hubcloud.one/drive/1an1k7qlgq11lgv"},
+          {name:"Episode 10",link:"https://hubcloud.one/drive/q2sqgffga3664gs"},
+          {name:"Episode 11",link:"https://hubcloud.one/drive/mpbnmq8p32oi1tv"},
+          {name:"Episode 12",link:"https://hubcloud.one/drive/yoydihwu33dxuxy"}
+          
+        ]
+      },
+      
+      "Horimiya(Season1) HIN-JAP-ENG 7,8,9ep added": {
         img:"https://i.imgur.com/qjJnQ33.jpeg",
         desc:"The story is about a beautiful girl named Hori who was at the top of her school, fell in love with a gloomy loner named Miyamura. The two started off as strangers at first but eventually met eachother, the two then started having romantic feelings for eachother and got engaged.",
         episodes:[
-            {name:"Episode 1",link:"https://hubcloud.one/drive/prt20hsphzohis9"},
-            {name:"Episode 2",link:"https://hubcloud.one/drive/uwluudtnvq43nqu"},
-            {name:"Episode 3",link:"https://hubcloud.one/drive/yrlpslqttrfvew9"},
-            {name:"Episode 4",link:"https://new3.gdflix.net/file/T5pZpxnPSy"},
-            {name:"Episode 5",link:"https://new3.gdflix.net/file/LCahQWPL4J"},
-            {name:"Episode 6",link:"https://new3.gdflix.net/file/9TaXoMCajl"}
+          {name:"Episode 1",link:"https://hubcloud.one/drive/prt20hsphzohis9"},
+          {name:"Episode 2",link:"https://hubcloud.one/drive/uwluudtnvq43nqu"},
+          {name:"Episode 3",link:"https://hubcloud.one/drive/yrlpslqttrfvew9"},
+          {name:"Episode 4",link:"https://new3.gdflix.net/file/T5pZpxnPSy"},
+          {name:"Episode 5",link:"https://new3.gdflix.net/file/LCahQWPL4J"},
+          {name:"Episode 6",link:"https://new3.gdflix.net/file/9TaXoMCajl"},
+          {name:"Episode 7",link:"https://new3.gdflix.net/file/O4XaAVIYwg"},
+          {name:"Episode 8",link:"https://new3.gdflix.net/file/Qd6ZKBRet2"},
+          {name:"Episode 9",link:"https://hubcloud.one/drive/x2amfuhzpmagf_s"}
         ]
-    },
+      },
 
-      "My Dress-Up Darling (Season 1) HIN-JAP-ENG 4,5,6ep added": {
-          img:"https://i.imgur.com/olPphyM.jpeg",
-          desc:"My Dress-Up Darling Season 1 follows Wakana Gojou, a shy high school boy passionate about traditional Hina doll craftsmanship, and Marin Kitagawa, a popular and outgoing classmate with a secret love for cosplay.When Marin discovers Wakana's exquisite sewing skills, she enlists his help to create elaborate cosplay costumes for her, leading to an unexpected collaboration that forms a heartwarming, cross-cultural romance as they bond over their shared, albeit different, passions.",
-          episodes:[
-              {name:"Episode 1",link:"https://hubcloud.one/drive/uuvfluufs7rvjmf"},
-              {name:"Episode 2",link:"https://hubcloud.one/drive/lvdk4bdthmolm55"},
-              {name:"Episode 3",link:"https://hubcloud.one/drive/6n069ddrd1nr4rb"},
-              {name:"Episode 4",link:"https://katdrive.link/file/1660029115"},
-              {name:"Episode 5",link:"https://katdrive.link/file/1660641778"},
-              {name:"Episode 6",link:"https://katdrive.link/file/1661249034"}  
-              
-            
-          ]
+      "My Dress-Up Darling (Season 1) HIN-JAP-ENG 7,8,9ep added": {
+        img:"https://i.imgur.com/olPphyM.jpeg",
+        desc:"My Dress-Up Darling Season 1 follows Wakana Gojou, a shy high school boy passionate about traditional Hina doll craftsmanship, and Marin Kitagawa, a popular and outgoing classmate with a secret love for cosplay.When Marin discovers Wakana's exquisite sewing skills, she enlists his help to create elaborate cosplay costumes for her, leading to an unexpected collaboration that forms a heartwarming, cross-cultural romance as they bond over their shared, albeit different, passions.",
+        episodes:[
+          {name:"Episode 1",link:"https://hubcloud.one/drive/uuvfluufs7rvjmf"},
+          {name:"Episode 2",link:"https://hubcloud.one/drive/lvdk4bdthmolm55"},
+          {name:"Episode 3",link:"https://hubcloud.one/drive/6n069ddrd1nr4rb"},
+          {name:"Episode 4",link:"https://katdrive.link/file/1660029115"},
+          {name:"Episode 5",link:"https://katdrive.link/file/1660641778"},
+          {name:"Episode 6",link:"https://katdrive.link/file/1661249034"},
+          {name:"Episode 7",link:"https://katdrive.link/file/1661849373"},
+          {name:"Episode 8",link:"https://katdrive.link/file/1662466717"},
+          {name:"Episode 9",link:"https://katdrive.link/file/1663071918"}
+        ]
+      },
+    
+    "Classroom of the Elite (Season 1) HIN-JAP-ENG Ep1,2,3 Added": {
+        img:"https://i.imgur.com/pwkwYoG.jpeg",
+        desc:"Classroom of the Elite follows Kiyotaka Ayanokōji as he enters Tokyo Koudo Ikusei Senior High School, a government-funded elite institution where students are ranked and treated based on their merit. While students enjoy freedom and a substantial monthly allowance, Ayanokōji finds himself in Class D, the school's lowest-ranked class filled with problem students. Alongside the aloof Suzune Horikita and the seemingly amicable Kikyo Kushida, he must navigate the school's cutthroat, merit-based system to rise through the ranks to Class A, uncovering its true, manipulative nature along the way.",
+        episodes:[
+          {name:"Episode 1",link:"https://new3.gdflix.net/file/B3KCPjmwxFqX7JJ"},
+          {name:"Episode 2",link:"https://new3.gdflix.net/file/DCU4QJAvx2meglI"},
+          {name:"Episode 3",link:"https://new3.gdflix.net/file/dsivIS4QR6uNO8u"}
+        ]
       }
     };
 
-  let currentPage = 1;
-  const perPage = 5;
-  let filteredNames = Object.keys(animeData);
+      let currentPage = 1;
+      const perPage = 5;
+      let filteredNames = Object.keys(animeData);
 
-  function renderAnime() {
-    const animeList = document.getElementById("animeList");
-    animeList.innerHTML = "";
-    const start = (currentPage-1)*perPage, end = start+perPage;
-    filteredNames.slice(start,end).forEach(name=>{
-      let div=document.createElement("div");
-      div.classList.add("anime-box");
-      div.setAttribute("onclick",`openAnime('${name}')`);
-      div.innerHTML=`<img src="${animeData[name].img}"><h2>${name}</h2><p>${animeData[name].desc}</p>`;
-      animeList.appendChild(div);
+      // 🔀 Shuffle function
+      function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      function renderAnime() {
+        const animeList = document.getElementById("animeList");
+        animeList.innerHTML = "";
+        const start = (currentPage - 1) * perPage, end = start + perPage;
+        filteredNames.slice(start, end).forEach(name => {
+          let div = document.createElement("div");
+          div.classList.add("anime-box");
+          div.setAttribute("onclick", `openAnime('${name}')`);
+          div.innerHTML = `<img src="${animeData[name].img}"><h2>${name}</h2><p>${animeData[name].desc}</p>`;
+          animeList.appendChild(div);
+        });
+        document.getElementById("prevBtn").style.display = currentPage > 1 ? "inline-block" : "none";
+        document.getElementById("nextBtn").style.display = end < filteredNames.length ? "inline-block" : "none";
+        document.getElementById("pageNum").textContent = "Page " + currentPage;
+      }
+
+      // ✅ Initial shuffle on page load
+      filteredNames = shuffle(filteredNames);
+      renderAnime();
+
+      function openAnime(name) {
+        document.getElementById("animeList").style.display = "none";
+        document.querySelector(".btn-container").style.display = "none";
+        document.getElementById("pageNum").style.display = "none";
+        document.querySelector(".top-bar").style.display = "none";
+        const epPage = document.getElementById("episodesPage");
+        epPage.style.display = "block";
+        document.getElementById("animeImg").src = animeData[name].img;
+        document.getElementById("animeTitle").textContent = name;
+        document.getElementById("animeDesc").textContent = animeData[name].desc;
+        const epList = document.getElementById("episodesList");
+        epList.innerHTML = "";
+        animeData[name].episodes.forEach(ep => {
+          let div = document.createElement("div");
+          div.classList.add("episode");
+          div.innerHTML = `<a href="${ep.link}" target="_blank">${ep.name}</a>`;
+          epList.appendChild(div);
+        });
+      }
+
+      function goBack() {
+        document.getElementById("animeList").style.display = "grid";
+        document.getElementById("episodesPage").style.display = "none";
+        document.querySelector(".btn-container").style.display = "block";
+        document.getElementById("pageNum").style.display = "block";
+        document.querySelector(".top-bar").style.display = "block";
+
+        // 🔀 Shuffle again when going back
+        filteredNames = shuffle(Object.keys(animeData));
+        currentPage = 1;
+        renderAnime();
+      }
+
+      document.getElementById("nextBtn").onclick = () => { currentPage++; renderAnime(); };
+      document.getElementById("prevBtn").onclick = () => { currentPage--; renderAnime(); };
+
+      document.getElementById("searchInput").addEventListener("input", function () {
+        const query = this.value.toLowerCase();
+        filteredNames = Object.keys(animeData).filter(n => n.toLowerCase().includes(query));
+        currentPage = 1;
+        renderAnime();
+      });
+    function openAnime(name){
+      document.getElementById("animeList").style.display="none";
+      document.querySelector(".btn-container").style.display="none";
+      document.getElementById("pageNum").style.display="none";
+      document.querySelector(".top-bar").style.display="none";
+      const epPage=document.getElementById("episodesPage");
+      epPage.style.display="block";
+      document.getElementById("animeImg").src=animeData[name].img;
+      document.getElementById("animeTitle").textContent=name;
+      document.getElementById("animeDesc").textContent=animeData[name].desc;
+      const epList=document.getElementById("episodesList");
+      epList.innerHTML="";
+      animeData[name].episodes.forEach(ep=>{
+        let div=document.createElement("div");
+        div.classList.add("episode");
+        div.innerHTML=`<a href="${ep.link}" target="_blank">${ep.name}</a>`;
+        epList.appendChild(div);
+      });
+    }
+    document.getElementById("nextBtn").onclick=()=>{currentPage++;renderAnime();};
+    document.getElementById("prevBtn").onclick=()=>{currentPage--;renderAnime();};
+
+    document.getElementById("searchInput").addEventListener("input", function() {
+      const query = this.value.toLowerCase();
+      filteredNames = Object.keys(animeData).filter(n => n.toLowerCase().includes(query));
+      currentPage = 1;
+      renderAnime();
     });
-    document.getElementById("prevBtn").style.display = currentPage > 1 ? "inline-block" : "none";
-    document.getElementById("nextBtn").style.display = end < filteredNames.length ? "inline-block" : "none";
-    document.getElementById("pageNum").textContent = "Page " + currentPage;
-  }
-  renderAnime();
-
-  function openAnime(name){
-    document.getElementById("animeList").style.display="none";
-    document.querySelector(".btn-container").style.display="none";
-    document.getElementById("pageNum").style.display="none";
-    document.querySelector(".top-bar").style.display="none";
-    const epPage=document.getElementById("episodesPage");
-    epPage.style.display="block";
-    document.getElementById("animeImg").src=animeData[name].img;
-    document.getElementById("animeTitle").textContent=name;
-    document.getElementById("animeDesc").textContent=animeData[name].desc;
-    const epList=document.getElementById("episodesList");
-    epList.innerHTML="";
-    animeData[name].episodes.forEach(ep=>{
-      let div=document.createElement("div");
-      div.classList.add("episode");
-      div.innerHTML=`<a href="${ep.link}" target="_blank">${ep.name}</a>`;
-      epList.appendChild(div);
-    });
-  }
-
-  function goBack(){
-    document.getElementById("animeList").style.display="grid";
-    document.getElementById("episodesPage").style.display="none";
-    document.querySelector(".btn-container").style.display="block";
-    document.getElementById("pageNum").style.display="block";
-    document.querySelector(".top-bar").style.display="block";
-    renderAnime();
-  }
-
-  document.getElementById("nextBtn").onclick=()=>{currentPage++;renderAnime();};
-  document.getElementById("prevBtn").onclick=()=>{currentPage--;renderAnime();};
-
-  document.getElementById("searchInput").addEventListener("input", function() {
-    const query = this.value.toLowerCase();
-    filteredNames = Object.keys(animeData).filter(n => n.toLowerCase().includes(query));
-    currentPage = 1;
-    renderAnime();
-  });
     </script>
-  </body>
+  </script>
+</body>
 </html>
