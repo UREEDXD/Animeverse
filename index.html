@@ -9,10 +9,15 @@
   <style>
     * { margin:0; padding:0; box-sizing:border-box; font-family:"Poppins",sans-serif; }
     body {
-      min-height:100vh; overflow-x:hidden;
+      min-height:100vh;
+      overflow-x:hidden;
       color:#fff;
       position: relative;
       padding-bottom: 80px;
+
+      /* Background image */
+      background: url("https://i.imgur.com/mTLYS37.jpeg") no-repeat center center fixed;
+      background-size: cover;
 
       /* 🛡 Prevent zooming/tap highlighting */
       -webkit-user-select: none;
@@ -20,6 +25,23 @@
       user-select: none;
       touch-action: manipulation;
     }
+    .glow-title {
+      text-align: center;
+      font-size: 2.3rem;
+      font-weight: bold;
+      margin-bottom: 0.6rem;
+      color: #ff0000;
+      text-shadow: 0 0 10px #ff0000,
+                   0 0 20px #aa0000,
+                   0 0 40px #550000;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow:0 0 10px #ff0000,0 0 20px #aa0000,0 0 40px #550000; }
+      to   { text-shadow:0 0 20px #ff4444,0 0 40px #ff0000,0 0 60px #880000; }
+    }
+
 
     .social-buttons {
       position: fixed;
@@ -40,17 +62,8 @@
     .social-buttons img:hover {
       transform: scale(1.1);
     }
-
-    /* 🔥 Video background */
-    .video-bg {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: -1;
-      pointer-events: none;
+    
     }
-
     header {
       text-align:center;
       padding:1.5rem;
@@ -264,14 +277,9 @@
       <img src="https://img.icons8.com/fluency/48/000000/instagram-new.png" alt="Instagram">
     </a>
   </div>
-
-  <!-- 🔥 Video Background -->
-  <video autoplay muted loop playsinline class="video-bg">
-    <source src="https://media.giphy.com/media/l3c4VbE2i6fvtJvEnU/giphy.mp4" type="video/mp4">
-  </video>
-
-  <header>AnimeVerse</header>
   <div class="top-bar">
+    <!-- 🔥 Glowing AnimeVerse text above search -->
+    <div class="glow-title">AnimeVerse</div>
     <input type="text" id="searchInput" class="search-bar" placeholder="Search Anime...">
   </div>
   <div class="anime-container" id="animeList"></div>
@@ -292,22 +300,21 @@
   <div class="credits-footer">Website developed by ⭐UREEDXD⭐</div>
 
   <script>
-    // 🎌 Random Anime Tips
-    const animeTips = [
-      "Tip: Never skip anime openings, they often foreshadow the story!",
-      "Tip: Sub or Dub? Try both and pick what feels best for you.",
-      "Tip: Always check if there’s a post-credit scene in anime movies.",
-      "Tip: Reading manga can give you more details after finishing the anime.",
-      "Tip: Watch seasonal charts to discover upcoming hidden gems.",
-      "Tip: Try watching with friends, it makes emotional moments even stronger.",
-      "Tip: Don’t binge too hard – enjoy the journey of each anime!",
-      "Tip: OSTs are half the experience – listen carefully to the background music.",
-      "Tip: Take breaks between episodes to absorb the story better.",
-      "Tip: Try different genres – comedy, slice of life, mecha, isekai – you might discover a new favorite!"
-    ];
-
-    // 🎲 Pick a random tip each load
     const animeData = {
+
+      "Solo LevelingS1 Ep1,2,3,4,5,6 Added HIN-JAP-ENG": {
+        img:"https://i.imgur.com/lZzqZaL.jpeg",
+        desc:"Solo Leveling Season 1 follows Jinwoo Sung, the World's Weakest E-rank hunter in a world with portals to monster-filled dungeons, as he receives a mysterious System after a near-death experience. This System grants him a video game-like level-up ability, forcing him into a brutal training regimen to become the strongest hunter to support his family and uncover secrets behind the gates.",
+        episodes:[
+          {name:"Episode 1",link:"https://katdrive.link/file/1705819590"},
+          {name:"Episode 2",link:"https://new3.gdflix.net/file/WspCmyUM7I"},
+          {name:"Episode 3",link:"https://new3.gdflix.net/file/DqD3Enjo5g"},
+          {name:"Episode 4",link:"https://new3.gdflix.net/file/uMAqMW0Zjy"},
+          {name:"Episode 5",link:"https://new3.gdflix.net/file/clt3EKijhI"},
+          {name:"Episode 6",link:"https://new3.gdflix.net/file/idgEp4fZgB"}
+        ]
+      },
+      
       "Attack on Titan All ep added of S1 HIN-JAP-ENG": {
         img:"https://i.imgur.com/QvJf65m.jpeg",
         desc:"Humanity fights against giant man-eating Titans.",
@@ -322,7 +329,7 @@
           {name:"Episode 8",link:"https://new3.gdflix.net/file/KXmNpGUPq5u7eWs"},
         ]
       },
-      "JUJUTSU Kaisen S2 HIN-JAP-ENG 10,11,12ep added": {
+      "JUJUTSU Kaisen S2 HIN-JAP-ENG Allep added": {
         img:"https://i.imgur.com/IyisGpq.jpeg",
         desc:"The past and present collide in a storm of curses. Season 2 dives into the dark history of Satoru Gojo and Suguru Geto during their time as Jujutsu High students. The Shibuya Incident Arc then takes center stage, throwing Tokyo into chaos as curses and sorcerers clash in one of the most intense battles in modern anime. Stunning animation, jaw-dropping fights, and heartbreaking twists make this season an unforgettable ride.",
         episodes:[
@@ -338,6 +345,17 @@
           {name:"Episode 10",link:"https://new3.gdflix.net/file/c71c3YBem6"},
           {name:"Episode 11",link:"https://new3.gdflix.net/file/aW67ozlqty"},
           {name:"Episode 12",link:"https://new3.gdflix.net/file/ODbURHb8V8"},
+          {name:"Episode 13",link:"https://new3.gdflix.net/file/bycLdMbyGU"},
+          {name:"Episode 14",link:"https://new3.gdflix.net/file/G5Qqr9sgt3"},
+          {name:"Episode 15",link:"https://new3.gdflix.net/file/HWI6trWwyH"},
+          {name:"Episode 16",link:"https://new3.gdflix.net/file/3L4oLBO6Rf"},
+          {name:"Episode 17",link:"https://new3.gdflix.net/file/Y28RzbLwIw"},
+          {name:"Episode 18",link:"https://new3.gdflix.net/file/aD00I4IO3T"},
+          {name:"Episode 19",link:"https://new3.gdflix.net/file/lvh42p9qgh"},
+          {name:"Episode 20",link:"https://new3.gdflix.net/file/hnjla6JBhc"},
+          {name:"Episode 21",link:"https://new3.gdflix.net/file/A5rA8jO5Vx"},
+          {name:"Episode 22",link:"https://new3.gdflix.net/file/S3tpMblotE"},
+          {name:"Episode 23",link:"https://new3.gdflix.net/file/5lzZ1QA1Fc"}
         ]
       },
       "Alya Sometimes Hides Her Feeling in Russian HIN-JAP-ENG S1 All EpAdded": {
@@ -360,7 +378,7 @@
         ]
       },
       
-      "Horimiya(Season1) HIN-JAP-ENG 7,8,9ep added": {
+      "Horimiya(Season1) HIN-JAP-ENG All Ep added": {
         img:"https://i.imgur.com/qjJnQ33.jpeg",
         desc:"The story is about a beautiful girl named Hori who was at the top of her school, fell in love with a gloomy loner named Miyamura. The two started off as strangers at first but eventually met eachother, the two then started having romantic feelings for eachother and got engaged.",
         episodes:[
@@ -372,7 +390,11 @@
           {name:"Episode 6",link:"https://new3.gdflix.net/file/9TaXoMCajl"},
           {name:"Episode 7",link:"https://new3.gdflix.net/file/O4XaAVIYwg"},
           {name:"Episode 8",link:"https://new3.gdflix.net/file/Qd6ZKBRet2"},
-          {name:"Episode 9",link:"https://hubcloud.one/drive/x2amfuhzpmagf_s"}
+          {name:"Episode 9",link:"https://hubcloud.one/drive/x2amfuhzpmagf_s"},
+          {name:"Episode 10",link:"https://new3.gdflix.net/file/3cOHtMw2Uc"},
+          {name:"Episode 11",link:"https://new3.gdflix.net/file/GvhlV1E9oh"},
+          {name:"Episode 12",link:"https://new3.gdflix.net/file/FKnnyZC4OA"},
+          {name:"Episode 13",link:"https://new3.gdflix.net/file/jxOvdHOM59"}
         ]
       },
 
@@ -388,17 +410,23 @@
           {name:"Episode 6",link:"https://katdrive.link/file/1661249034"},
           {name:"Episode 7",link:"https://katdrive.link/file/1661849373"},
           {name:"Episode 8",link:"https://katdrive.link/file/1662466717"},
-          {name:"Episode 9",link:"https://katdrive.link/file/1663071918"}
+          {name:"Episode 9",link:"https://katdrive.link/file/1663071918"},
+          {name:"Episode 11",link:"https://katdrive.link/file/1663759359"},
+          {name:"Episode 12",link:"https://katdrive.link/file/1664272847"},
+          {name:"Episode 13",link:"https://katdrive.link/file/1664878938"}
         ]
       },
     
-    "Classroom of the Elite (Season 1) HIN-JAP-ENG Ep1,2,3 Added": {
+    "Classroom of the Elite (Season 1) HIN-JAP-ENG Ep4,5,6 Added": {
         img:"https://i.imgur.com/pwkwYoG.jpeg",
         desc:"Classroom of the Elite follows Kiyotaka Ayanokōji as he enters Tokyo Koudo Ikusei Senior High School, a government-funded elite institution where students are ranked and treated based on their merit. While students enjoy freedom and a substantial monthly allowance, Ayanokōji finds himself in Class D, the school's lowest-ranked class filled with problem students. Alongside the aloof Suzune Horikita and the seemingly amicable Kikyo Kushida, he must navigate the school's cutthroat, merit-based system to rise through the ranks to Class A, uncovering its true, manipulative nature along the way.",
         episodes:[
           {name:"Episode 1",link:"https://new3.gdflix.net/file/B3KCPjmwxFqX7JJ"},
           {name:"Episode 2",link:"https://new3.gdflix.net/file/DCU4QJAvx2meglI"},
-          {name:"Episode 3",link:"https://new3.gdflix.net/file/dsivIS4QR6uNO8u"}
+          {name:"Episode 3",link:"https://new3.gdflix.net/file/dsivIS4QR6uNO8u"},
+          {name:"Episode 4",link:"https://new3.gdflix.net/file/baNGX9dNDwxl96i"},
+          {name:"Episode 5",link:"https://new3.gdflix.net/file/ORhXqqebkurkoBB"},
+          {name:"Episode 6",link:"https://new3.gdflix.net/file/gyirURPKyKFZRsq"},
         ]
       }
     };
